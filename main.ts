@@ -85,6 +85,13 @@ const delProduct = async (req, res) =>{
     res.json(product);
 }
 
+const xPassword = async (req, res, next) => {
+    const password = req.get('x-password')
+    if (password !== '1111') return res.status(403).json({ message: 'False password'});
+    next();
+}
+
+app.use(xPassword);
 app.get('/product/:id', getProduct);
 app.post('/product', addProduct);
 app.put('/product/:id', putProduct);
